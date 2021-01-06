@@ -4,17 +4,27 @@
 
 - Evitar ter que passar um treinamento para execução dos códigos;
 - Criar uma solução mais robusta para nossos clientes;
-- Centralizar tipos de script em uma interface web;
+- Centralizar tipos de script em uma interface web.
 
 ## Etapas de aprendizado
 
-- Entender o conceito básico do django
+- Conhecendo o conceito básico do django
 - Instalar o django
-- Criar o primeiro projeto
-- Entender as caracteristicas do projeto
-- Entender o settings.py
+- Criar o primeiro **projeto**
+- Conhecendo as caracteristicas do projeto
+- Conhecendo o settings.py
 - Iniciar o servidor DJANGO
-- Entender o ciclo de requisição do DJANGO
+- Conhecendo o ciclo de requisição do DJANGO
+- Conhecendo e criar uma **aplicacao**
+- Conhecendo makemigrations e migrate
+- Criando nosso primeiro MODEL
+  - Criar o model no arquivo .models
+- Conhecendo o DJANGO ADMIN
+  - Registrar as aplicações
+    -  Adicionar o models no admin.py para aparecer no DJANGO ADMIN
+PROXIMA AULA
+- CONHECER O QUE É CRUD
+- CRIAR UM CRUD COMPLETO
 
 ### Criar o primeiro projeto
 
@@ -24,7 +34,7 @@ django-admin startproject pastelariaDevops .
 
 ### Caracteristicas do projeto
 .
-├── anotações.md
+├── README.md
 ├── manage.py - Utilitário de linha de comando para tarefas administrativas
 └── pastelariaDevops - Pasta do nosso projeto
     ├── __init__.py
@@ -54,3 +64,52 @@ STATIC_URL -> Pasta base dos arquivos estaticos
 ```
 python3 manage.py runserver
 ```
+
+### Criando a primeira aplicação
+
+```
+python3 manage.py startapp pastelaria
+```
+
+### makemigrations e migrate
+
+makemigrations - Prepara as alterações que devem ser aplicadas no banco de dados
+migrate - Aplica as alterações no banco de dados
+
+```
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+
+### Criando nosso primeiro MODEL
+
+```
+class Lojas(models.Model):
+    name = models.CharField(max_length=50)
+    endereco = models.CharField(max_length=150)
+    status = models.BooleanField(default=True)
+        
+    #def __str__(self):
+    #    return self.name
+```
+
+### Criando usuário superadmin Django
+
+```
+python3 manage.py createsuperuser
+```
+
+### Registrar o model no django admin
+
+No arquivo admin.py da app
+
+```
+from django.contrib import admin
+from .models import Lojas
+
+# Register your models here.
+
+admin.site.register(Lojas)
+```
+
+
