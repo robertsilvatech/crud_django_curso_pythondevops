@@ -8,6 +8,7 @@
 
 ## Etapas de aprendizado
 
+AULA 01 
 - Conhecendo o conceito básico do django
 - Instalar o django
 - Criar o primeiro **projeto**
@@ -15,6 +16,8 @@
 - Conhecendo o settings.py
 - Iniciar o servidor DJANGO
 - Conhecendo o ciclo de requisição do DJANGO
+
+AULA 02
 - Conhecendo e criar uma **aplicacao**
 - Conhecendo makemigrations e migrate
 - Criando nosso primeiro MODEL
@@ -22,9 +25,29 @@
 - Conhecendo o DJANGO ADMIN
   - Registrar as aplicações
     -  Adicionar o models no admin.py para aparecer no DJANGO ADMIN
-PROXIMA AULA
+
+AULA 03
 - CONHECER O QUE É CRUD
-- CRIAR UM CRUD COMPLETO
+  - C -> create
+  - R -> read
+  - U -> update
+  - D -> delete
+- CRIAR UM CRUD
+  - CRIAR CREATE
+  - CRIAR READ
+
+AULA 04 
+- CRIAR UPDATE
+- CRIAR DELETE
+
+
+AULA 05
+- CRIANDO TEMPLATE BASE
+- TRABALHANDO COM BOOTSTRAP
+- ENTENDENDO O JINJA 2
+
+
+
 
 ### Criar o primeiro projeto
 
@@ -111,5 +134,104 @@ from .models import Lojas
 
 admin.site.register(Lojas)
 ```
+
+### CRIAR UM CRUD COMPLETO
+
+#### CREATE 
+
+Na URL do projeto, apontar para a URL da aplicação
+
+```
+from pastelariaDevops.core import urls as core_url
+```
+
+Add a ultima linha que mostra o include
+
+```
+urlpatterns = [
+    path('healthcheck', healthcheck),
+    path('mymachine', mymachine),
+    path('hello', hello),
+    path('admin/', admin.site.urls),
+    path('loja/', include(core_url))
+]
+```
+
+Criar um formulário
+
+Dentro da app criar o arquivo **forms.py**
+
+```
+from django import forms
+from django.forms import ModelForm
+from .models import Loja
+
+class LojaForm(ModelForm):
+    class Meta:
+        model = Loja
+        fields = '__all__'
+```
+
+Na view da app
+
+```
+from django.shortcuts import render
+from .models import Loja
+from .forms import LojaForm
+
+# Create your views here.
+
+def create_loja(request):
+    form = LojaForm(request.POST or None, request.FILES or None)
+
+    if form.is_valid():
+        form.save()
+        return redirect('loja_obrigado')
+    return render(request, 'loja_form.html', {"form": form})
+```
+
+Criar a pasta **templates** dentro da app
+
+Criar o arquivo **loja_form.html**
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário LOJA</title>
+</head>
+<body>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Salvar</button>
+    </form>
+    
+</body>
+</html>
+```
+
+#### READ
+
+Na URL da app, criar uma nova URL para lista de lojas.
+
+Nas views
+
+```
+def read_loja(request):
+    lojas = Loja.objects.all()
+    return render(request, 'loja_lista.html', {"lojas": lojas})
+```
+
+Cria o arquivo **loja_lista.html**
+
+`Usar o modelo de tabela do site bootstrap como referência`
+
+Edit no views de create para redirecionar para a pagina de lista de lojas, após criar uma nova loja.
+
+
 
 

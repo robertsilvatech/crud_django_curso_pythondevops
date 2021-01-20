@@ -15,13 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
 from .views import hello
 from .views import mymachine
 from .views import healthcheck
+from pastelariaDevops.core import urls as core_url
 
 urlpatterns = [
     path('healthcheck', healthcheck),
     path('mymachine', mymachine),
     path('hello', hello),
-    path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('loja/', include(core_url))
 ]

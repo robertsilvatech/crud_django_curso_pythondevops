@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Endereco</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if lojas %}
+          {% for loja in lojas %}
+          <tr>
+            <th>{{ loja.id }}</th>
+            <td>{{ loja.name }}</td>
+            <td>{{ loja.endereco }}</td>
+            <td>{{ loja.status }}</td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+        </tbody>
+    </table>   
+</body>
+</html>

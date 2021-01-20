@@ -10,7 +10,7 @@ from django.db import models
 
 # Create your models here.
 
-class Lojas(models.Model):
+class Loja(models.Model):
     name = models.CharField(max_length=50)
     endereco = models.CharField(max_length=150)
     status = models.BooleanField(default=True)
