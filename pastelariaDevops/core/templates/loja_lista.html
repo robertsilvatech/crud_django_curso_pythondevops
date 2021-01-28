@@ -20,14 +20,18 @@
           {% if lojas %}
           {% for loja in lojas %}
           <tr>
-            <th>{{ loja.id }}</th>
+            <th><a href="{% url 'update_loja' loja.id %}">{{ loja.id }}</a></th>
             <td>{{ loja.name }}</td>
             <td>{{ loja.endereco }}</td>
             <td>{{ loja.status }}</td>
+            <td><a href={% url 'delete_loja' loja.id %}>Delete</a></td>
           </tr>
           {% endfor %}
           {% endif %}
         </tbody>
-    </table>   
+    </table>
+    
+    <a href={% url 'create_loja' %}>Criar NOVA LOJA</a>
+
 </body>
 </html>

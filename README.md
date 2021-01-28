@@ -40,12 +40,13 @@ AULA 04
 - CRIAR UPDATE
 - CRIAR DELETE
 
-
 AULA 05
 - CRIANDO TEMPLATE BASE
 - TRABALHANDO COM BOOTSTRAP
 - ENTENDENDO O JINJA 2
 
+AULA 06
+- COMO UTILIZAR BANCO DE DADOS POSTGRESQL
 
 
 
@@ -232,6 +233,101 @@ Cria o arquivo **loja_lista.html**
 
 Edit no views de create para redirecionar para a pagina de lista de lojas, após criar uma nova loja.
 
+#### Update
 
+Criar uma view (na aplicacao) que faz a busca do objeto por ID no banco de dados
 
+```
+def update_loja(request, id):
+    loja = get_object_or_404(Loja, pk=id)
+    print(loja)
+    form = LojaForm(request.POST or None, request.FILES or None, instance=loja)
+    print(form)
+
+    if form.is_valid():
+        form.save()
+        return redirect('read_loja')
+    return render(request, 'loja_form.html', {"form": form})
+```
+
+Criar a URL no app
+
+```
+from .views import update_loja
+
+urlpatterns = [
+    path('', create_loja, name='create_loja'),
+    path('lista', read_loja, name='read_loja'),
+    path('update/<int:id>', update_loja, name='update_loja')
+]
+```
+
+No formulário que lista os objetos (html de lista)
+Adicionar um link para a URL de update, passando a instante de id do objeto
+
+```
+        <tbody>
+          {% if lojas %}
+          {% for loja in lojas %}
+          <tr>
+            <th><a href="{% url 'update_loja' loja.id %}">{{ loja.id }}</a></th>
+            <td>{{ loja.name }}</td>
+            <td>{{ loja.endereco }}</td>
+            <td>{{ loja.status }}</td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+        </tbody>
+    </table>
+```
+
+#### Delete 
+
+Criar a view para deletar o objeto do banco de dados
+
+```
+def delete_loja(request, id):
+    loja = get_object_or_404(Loja, pk=id)
+    form = LojaForm(request.POST or None, request.FILES or None, instance=loja)
+    if request.method == 'POST':
+        loja.delete()
+        return redirect('read_loja')
+    return render(request, 'loja_delete_confirm.html', {'form': form, 'loja': loja})
+```
+
+Criar a pagina de confirmação de delete
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário LOJA</title>
+</head>
+<body>
+
+    <h1>Tem certeza que deseja delete {{ loja }}</h1>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Delete</button>
+    </form>
+    
+</body>
+</html>
+```
+
+Criar URL na app para delete
+
+```
+from .views import delete_loja
+
+urlpatterns = [
+    path('', create_loja, name='create_loja'),
+    path('lista', read_loja, name='read_loja'),
+    path('update/<int:id>', update_loja, name='update_loja'),
+    path('delete/<int:id>', delete_loja, name='delete_loja')
+]
+```
 

@@ -7,15 +7,12 @@
 </head>
 <body>
 
+    <h1>Tem certeza que deseja delete {{ loja }}</h1>
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form }}
-        <button type="submit">Salvar</button>
+        <button type="submit">Delete</button>
     </form>
-
-
-    
-    <a href={% url 'read_loja' %}>Lista de lojas</a>
     
 </body>
 </html>
