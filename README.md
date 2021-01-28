@@ -57,6 +57,8 @@ django-admin startproject pastelariaDevops .
 ```
 
 ### Caracteristicas do projeto
+
+```
 .
 ├── README.md
 ├── manage.py - Utilitário de linha de comando para tarefas administrativas
@@ -66,6 +68,8 @@ django-admin startproject pastelariaDevops .
     ├── settings.py - Arquivo mais importante do projeto, toda configuração relacionado ao projeto será feita nesse arquivo
     ├── urls.py - URLS do projeto
     └── wsgi.py - Entrypoint da aplicação, utilizado para trabalhar com servidores Web.
+```
+
 
 ### settings.py
 
@@ -233,7 +237,7 @@ Cria o arquivo **loja_lista.html**
 
 Edit no views de create para redirecionar para a pagina de lista de lojas, após criar uma nova loja.
 
-#### Update
+#### UPDATE
 
 Criar uma view (na aplicacao) que faz a busca do objeto por ID no banco de dados
 
@@ -281,7 +285,7 @@ Adicionar um link para a URL de update, passando a instante de id do objeto
     </table>
 ```
 
-#### Delete 
+#### DELETE 
 
 Criar a view para deletar o objeto do banco de dados
 
@@ -331,3 +335,21 @@ urlpatterns = [
 ]
 ```
 
+No template de HTML que lista os objetos, adicionar o link para URL de delete
+
+```
+        <tbody>
+          {% if lojas %}
+          {% for loja in lojas %}
+          <tr>
+            <th><a href="{% url 'update_loja' loja.id %}">{{ loja.id }}</a></th>
+            <td>{{ loja.name }}</td>
+            <td>{{ loja.endereco }}</td>
+            <td>{{ loja.status }}</td>
+            <td><a href={% url 'delete_loja' loja.id %}>Delete</a></td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+        </tbody>
+    </table>
+```
