@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário LOJA</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}
+Confirmação para deletar
+{% endblock %}
+
+{% block main %}
 
     <h1>Tem certeza que deseja delete {{ loja }}</h1>
     <form action="" method="POST" enctype="multipart/form-data">
@@ -14,5 +13,4 @@
         <button type="submit">Delete</button>
     </form>
     
-</body>
-</html>
+{% endblock %}

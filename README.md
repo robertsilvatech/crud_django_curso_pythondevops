@@ -43,10 +43,16 @@ AULA 04
 AULA 05
 - CRIANDO TEMPLATE BASE
 - TRABALHANDO COM BOOTSTRAP
-- ENTENDENDO O JINJA 2
 
 AULA 06
+- CONTINUACAO BOOTSTRAP
+- ENTENDENDO O JINJA 2
+
+AULA 07
 - COMO UTILIZAR BANCO DE DADOS POSTGRESQL
+
+AULA 08 
+- EXECUTANDO UM SCRIPT PELA INTERFACE WEB
 
 
 
@@ -353,3 +359,92 @@ No template de HTML que lista os objetos, adicionar o link para URL de delete
         </tbody>
     </table>
 ```
+
+
+## TRABALHANDO COM TEMPLATE BASE
+
+1. Criar um arquivo HTML para a nossa BASE.
+
+```
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+<h1>Esse arquivo esta carregando o template base</h1>
+
+{% block main %}
+{% endblock %}
+    
+</body>
+</html>
+```
+
+2. Carregar o template BASE nas outras PÁGINAS HTML
+
+```
+{% extends 'base.html' %}
+
+{% block title %}
+Formulário nova loja
+{% endblock %}
+
+{% block main %}
+
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Salvar</button>
+    </form>
+    
+    <a href={% url 'read_loja' %}>Lista de lojas</a>
+    
+{% endblock %}
+```
+
+## Trabalhando com bootstrap
+
+### Adicionando bootstrap no formulário
+
+**Documentação:** https://django-bootstrap-form.readthedocs.io/en/latest/
+
+- Instalar o bootstrap
+
+```
+python3 -m pip install django-bootstrap-form
+```
+
+- Adicionar o app no settings
+
+INSTALLED_APPS = [
+    ...
+    'bootstrapform',
+    ...
+]
+
+
+- Carrega o bootstrap nos templates de formulário
+
+```
+{% extends 'base.html' %}
+
+{% load bootstrap %}
+
+...
+```
+
+- Carregar o bootstrp no form
+
+```
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|bootstrap}}
+        <button type="submit">Salvar</button>
+    </form>
+```
+
+### Deixando o projeto bonito com bootstrap
